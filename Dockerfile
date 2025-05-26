@@ -1,25 +1,43 @@
-FROM node:18-alpine
+# Simplified Dockerfile for Render deployment
+FROM node:18-slim
 
 WORKDIR /app
 
-# Install dependencies
-COPY package*.json ./
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    python3 \
+    build-essential \
+    openssl \
+    dos2unix \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy package files
+COPY package.json ./
+COPY package-lock.json* ./
 RUN npm install
-RUN npm install -g prisma
 
 # Generate Prisma client
 COPY prisma ./prisma/
 RUN npx prisma generate
 
-# Copy application source
+# Copy source code
 COPY . .
 
 # Build the application
 RUN npm run build
 
-# Expose the port the app runs on
+# Fix entrypoint script
+RUN dos2unix ./docker-entrypoint.sh && \
+    chmod +x ./docker-entrypoint.sh
+
+# Set environment variables
+ENV NODE_ENV=production
 ENV PORT=10000
+
+# Expose the port
 EXPOSE 10000
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["./docker-entrypoint.sh"]
