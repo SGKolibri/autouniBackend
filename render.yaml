@@ -1,8 +1,7 @@
-services:
-  - type: web
-    name: autouni-backend    env: node
-    buildCommand: npm install && npm run build && npm run db:deploy
-    startCommand: bash ./start.sh
+services:  - type: web
+    name: autouni-backend
+    env: node    buildCommand: bash ./build.sh && npm run db:deploy
+    startCommand: node dist/app.js
     envVars:
       - key: NODE_ENV
         value: production
