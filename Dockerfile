@@ -2,9 +2,13 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Install dependencies
-COPY package*.json ./
-RUN npm install
+# Add dependencies for Prisma and other native modules
+RUN apk add --no-cache python3 make g++ openssl-dev
+
+# Copy package files and npm config
+COPY package*.json .npmrc ./
+RUN npm install --no-optional --legacy-peer-deps --loglevel verbose
+RUN npm install -g prisma
 
 # Copy Prisma schema and generate client
 COPY prisma ./prisma/
@@ -16,8 +20,11 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Run Prisma migrations
-RUN chmod +x /app/docker-entrypoint.sh
+# Copy and fix entrypoint script
+COPY docker-entrypoint.sh .
+RUN apk add --no-cache dos2unix && \
+    dos2unix /app/docker-entrypoint.sh && \
+    chmod +x /app/docker-entrypoint.sh
 
 # Expose the port the app runs on
 ENV PORT=10000

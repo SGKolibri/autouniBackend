@@ -8,7 +8,7 @@
     "start": "node dist/app.js",
     "render-start": "node dist/app.js",
     "dev": "nodemon --exec ts-node src/app.ts",
-    "build": "tsc && echo 'TypeScript compilation completed'",
+    "build": "tsc --project tsconfig.json && echo 'TypeScript compilation completed'",
     "clean": "rimraf dist",
     "postinstall": "prisma generate",
     "db:deploy": "prisma migrate deploy"
