@@ -1,3 +1,0 @@
-# This file specifies the command that Render should run to start your application
-
-node dist/app.js

@@ -46,12 +46,21 @@ Backend API for the AutoUni application.
    - `JWT_SECRET`: your-secret-jwt-key
    - `DATABASE_URL`: your-postgres-connection-string
 
-### Option 2: Using Docker
+### Option 3: Using Docker (recommended for production)
 
-1. Create a new Web Service on Render using Docker
+1. Create a new Web Service on Render
 2. Connect your repository
-3. Render will automatically use the Dockerfile in your project
-4. Add the necessary environment variables in the Render dashboard
+3. Select "Docker" as the environment
+4. Leave "Dockerfile Path" as default (./Dockerfile)
+5. Add the following environment variables:
+   - `NODE_ENV`: production
+   - `PORT`: 10000
+   - `JWT_SECRET`: your-secure-jwt-secret
+   - `DATABASE_URL`: your-postgres-connection-string
+6. Click "Create Web Service"
+7. Connect your repository
+8. Render will automatically use the Dockerfile in your project
+9. Add the necessary environment variables in the Render dashboard
 
 ## Database Setup
 
