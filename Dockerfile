@@ -1,33 +1,51 @@
-FROM node:18-alpine
+# Use a specific Node.js version with hash for reproducible builds
+FROM node:18.19-alpine3.18
 
+# Set working directory
 WORKDIR /app
 
-# Add dependencies for Prisma and other native modules
-RUN apk add --no-cache python3 make g++ openssl-dev
+# Install system dependencies
+# Use a single RUN command to reduce layers and ensure all dependencies are installed
+RUN apk update && \
+    apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    openssl-dev \
+    bash \
+    dos2unix
 
-# Copy package files and npm config
-COPY package*.json .npmrc ./
-RUN npm install --no-optional --legacy-peer-deps --loglevel verbose
-RUN npm install -g prisma
+# Copy package files
+COPY package.json package-lock.json* ./
 
-# Copy Prisma schema and generate client
+# Install dependencies with explicit NPM path
+# Use a specific version of npm for consistency
+RUN /usr/local/bin/npm install --production=false
+
+# Install prisma globally
+RUN /usr/local/bin/npm install -g prisma
+
+# Generate Prisma client
 COPY prisma ./prisma/
-RUN npx prisma generate
+RUN /usr/local/bin/npx prisma generate
 
-# Copy application source
-COPY . .
+# Copy source code
+COPY tsconfig.json ./
+COPY src ./src/
 
 # Build the application
-RUN npm run build
+RUN /usr/local/bin/npm run build
 
-# Copy and fix entrypoint script
-COPY docker-entrypoint.sh .
-RUN apk add --no-cache dos2unix && \
-    dos2unix /app/docker-entrypoint.sh && \
+# Copy entrypoint script and make it executable
+COPY docker-entrypoint.sh ./
+RUN dos2unix /app/docker-entrypoint.sh && \
     chmod +x /app/docker-entrypoint.sh
 
-# Expose the port the app runs on
+# Set environment variables
+ENV NODE_ENV=production
 ENV PORT=10000
+
+# Expose the port
 EXPOSE 10000
 
 # Start the application
