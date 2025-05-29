@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Projetor",
+    "status": "available"
+  },
+  {
+    "name": "Quadro interativo",
+    "status": "in_use"
+  },
+  {
+    "name": "Ar-condicionado",
+    "status": "maintenance"
+  },
+  {
+    "name": "Câmera de segurança",
+    "status": "active"
+  },
+  {
+    "name": "Impressora",
+    "status": "available"
+  },
+  {
+    "name": "Sensor de movimento",
+    "status": "active"
+  },
+  {
+    "name": "Lâmpada smart",
+    "status": "active"
+  },
+  {
+    "name": "Sistema de som",
+    "status": "available"
+  },
+  {
+    "name": "Workstation",
+    "status": "in_use"
+  },
+  {
+    "name": "Servidor de arquivos",
+    "status": "active"
+  }
+]

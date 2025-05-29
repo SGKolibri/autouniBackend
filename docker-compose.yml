@@ -1,24 +1,16 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  db:
-    image: postgres
+  postgres:
+    image: postgres:latest
     container_name: autouni-postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: autouni
-      POSTGRES_USER: postgres
-      POSTGRES_DB: autounidb
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: autounidockeradmin
+      POSTGRES_DB: autounidb
     volumes:
       - pgdata:/var/lib/postgresql/data
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
 
 volumes:
   pgdata:

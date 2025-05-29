@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.7.0
- * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+ * Prisma Client JS version: 6.8.2
+ * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
  */
 Prisma.prismaVersion = {
-  client: "6.7.0",
-  engine: "3cff47a7f5d65c3ea74883f1d736e41d68ce91ed"
+  client: "6.8.2",
+  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -140,8 +140,78 @@ exports.Prisma.RoomScalarFieldEnum = {
 exports.Prisma.DeviceScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  roomId: 'roomId',
   status: 'status'
+};
+
+exports.Prisma.DeviceRoomScalarFieldEnum = {
+  deviceId: 'deviceId',
+  roomId: 'roomId'
+};
+
+exports.Prisma.AutomationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  enabled: 'enabled',
+  triggerId: 'triggerId',
+  scheduleId: 'scheduleId'
+};
+
+exports.Prisma.TriggerScalarFieldEnum = {
+  id: 'id',
+  type: 'type'
+};
+
+exports.Prisma.TriggerTimeScalarFieldEnum = {
+  id: 'id',
+  time: 'time',
+  triggerId: 'triggerId'
+};
+
+exports.Prisma.TriggerDeviceScalarFieldEnum = {
+  id: 'id',
+  deviceId: 'deviceId',
+  deviceState: 'deviceState',
+  triggerId: 'triggerId'
+};
+
+exports.Prisma.TriggerSceneScalarFieldEnum = {
+  id: 'id',
+  sceneId: 'sceneId',
+  triggerId: 'triggerId'
+};
+
+exports.Prisma.ActionScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  automationId: 'automationId'
+};
+
+exports.Prisma.ActionDeviceScalarFieldEnum = {
+  id: 'id',
+  targetId: 'targetId',
+  state: 'state',
+  brightness: 'brightness',
+  temperature: 'temperature',
+  level: 'level',
+  actionId: 'actionId'
+};
+
+exports.Prisma.ActionSceneScalarFieldEnum = {
+  id: 'id',
+  targetId: 'targetId',
+  actionId: 'actionId'
+};
+
+exports.Prisma.ScheduleScalarFieldEnum = {
+  id: 'id',
+  repeat: 'repeat',
+  time: 'time'
+};
+
+exports.Prisma.ScheduleDayScalarFieldEnum = {
+  id: 'id',
+  day: 'day',
+  scheduleId: 'scheduleId'
 };
 
 exports.Prisma.SortOrder = {
@@ -154,12 +224,28 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   Building: 'Building',
   Floor: 'Floor',
   Room: 'Room',
-  Device: 'Device'
+  Device: 'Device',
+  DeviceRoom: 'DeviceRoom',
+  Automation: 'Automation',
+  Trigger: 'Trigger',
+  TriggerTime: 'TriggerTime',
+  TriggerDevice: 'TriggerDevice',
+  TriggerScene: 'TriggerScene',
+  Action: 'Action',
+  ActionDevice: 'ActionDevice',
+  ActionScene: 'ActionScene',
+  Schedule: 'Schedule',
+  ScheduleDay: 'ScheduleDay'
 };
 
 /**

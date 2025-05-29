@@ -10,6 +10,8 @@ import { buildingSchemas } from "./modules/building/building.schema";
 import { floorSchemas } from "./modules/floor/floor.schema";
 import { roomSchemas } from "./modules/room/room.schema";
 import { deviceSchemas } from "./modules/device/device.schema";
+import { automationSchemas } from "./modules/automation/automation.schema";
+import automationRoutes from "./modules/automation/automation.routes";
 
 export const server = Fastify();
 
@@ -76,6 +78,7 @@ async function main() {
     ...floorSchemas,
     ...roomSchemas,
     ...deviceSchemas,
+    ...automationSchemas,
   ]) {
     server.addSchema(schema);
   }
@@ -95,6 +98,9 @@ async function main() {
   });
   server.register(deviceRoutes, {
     prefix: "/api/device",
+  });
+  server.register(automationRoutes, {
+    prefix: "/api/automation",
   });
   //   server.register(funcionarioRoutes, { prefix: "/api/func" });
   //   server.register(adminRoutes, { prefix: "/api/admin" });

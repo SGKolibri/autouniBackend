@@ -5,8 +5,9 @@ import {
   getDevicesByRoomIdHandler,
   updateDeviceStatusHandler,
   deleteDeviceHandler,
+  connectDeviceToRoomHandler,
+  disconnectDeviceFromRoomHandler,
 } from "./device.controller";
-import { $ref } from "./device.schema";
 
 async function deviceRoutes(server: FastifyInstance) {
   server.get("/", getDevicesHandler);
@@ -15,9 +16,16 @@ async function deviceRoutes(server: FastifyInstance) {
 
   server.post("/", createDeviceHandler);
 
-  server.patch("/:deviceId/status", updateDeviceStatusHandler);
+  server.put("/:deviceId/status", updateDeviceStatusHandler);
 
   server.delete("/:deviceId", deleteDeviceHandler);
+
+  server.post("/connect", connectDeviceToRoomHandler);
+
+  server.delete(
+    "/disconnect/:deviceId/:roomId",
+    disconnectDeviceFromRoomHandler
+  );
 }
 
 export default deviceRoutes;

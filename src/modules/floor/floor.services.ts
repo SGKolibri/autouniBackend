@@ -29,3 +29,24 @@ export async function getFloors() {
   });
   return floors;
 }
+
+export async function createFloorsAtBulk(
+  buildingId: string,
+  numberOfFloors: number
+) {
+  const building = await prisma.building.findUnique({
+    where: { id: buildingId },
+  });
+  if (!building) {
+    throw new Error("Bloco não encontrado");
+  }
+
+  const floors = await prisma.floor.createMany({
+    data: Array.from({ length: numberOfFloors }, (_, i) => ({
+      number: i + 1,
+      buildingId,
+    })),
+  });
+
+  return floors;
+}

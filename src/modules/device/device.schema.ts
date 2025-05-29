@@ -1,30 +1,24 @@
 import { z } from "zod";
 import { buildJsonSchemas } from "fastify-zod";
 
-const deviceSchema = z.object({
-  id: z.string(),
+export const deviceSchema = z.object({
   name: z.string(),
-  roomId: z.string(),
-  status: z.string(),
-  room: z.object({
-    id: z.string(),
-    name: z.string(),
-    floorId: z.string(),
-  }),
-});
-
-const deviceInputSchema = z.object({
-  name: z.string(),
-  roomId: z.string(),
   status: z.string(),
 });
 
-export type DeviceInput = z.infer<typeof deviceInputSchema>;
+// For connecting a device to a room
+export const deviceRoomSchema = z.object({
+  deviceId: z.string(),
+  roomId: z.string(),
+});
+
+export type DeviceInput = z.infer<typeof deviceSchema>;
+export type DeviceRoomInput = z.infer<typeof deviceRoomSchema>;
 
 export const { schemas: deviceSchemas, $ref } = buildJsonSchemas(
   {
     deviceSchema,
-    deviceInputSchema,
+    deviceRoomSchema,
   },
   {
     $id: "deviceSchema",

@@ -1,43 +1,23 @@
-# Simplified Dockerfile for Render deployment
-FROM node:18-slim
+# Use an official Node.js runtime as a parent image
+FROM node:18-alpine
 
+# Set working directory inside the container
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y \
-    python3 \
-    build-essential \
-    openssl \
-    dos2unix \
-    --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
+# Copy package.json and package-lock.json (if you have it)
+COPY package*.json ./
 
-# Copy package files
-COPY package.json ./
-COPY package-lock.json* ./
+# Install dependencies
 RUN npm install
 
-# Generate Prisma client
-COPY prisma ./prisma/
-RUN npx prisma generate
-
-# Copy source code
+# Copy the rest of the application source code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Generate Prisma client (optional but recommended for production)
+RUN npx prisma generate
 
-# Fix entrypoint script
-RUN dos2unix ./docker-entrypoint.sh && \
-    chmod +x ./docker-entrypoint.sh
+# Expose your app's port (adjust if your app runs on a different port)
+EXPOSE 3000
 
-# Set environment variables
-ENV NODE_ENV=production
-ENV PORT=10000
-
-# Expose the port
-EXPOSE 10000
-
-# Start the application
-CMD ["./docker-entrypoint.sh"]
+# Start your app
+CMD ["npm", "start"]

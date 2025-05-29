@@ -18,22 +18,30 @@ model Floor {
   id         String   @id @default(cuid())
   number     Int
   buildingId String
-  building   Building @relation(fields: [buildingId], references: [id])
+  building   Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
   rooms      Room[]
 }
 
 model Room {
-  id      String   @id @default(cuid())
+  id      String       @id @default(cuid())
   name    String
   floorId String
-  floor   Floor    @relation(fields: [floorId], references: [id])
-  devices Device[]
+  floor   Floor        @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  devices DeviceRoom[]
 }
 
 model Device {
-  id     String @id @default(cuid())
+  id     String       @id @default(cuid())
   name   String
-  roomId String
-  room   Room   @relation(fields: [roomId], references: [id])
   status String
+  rooms  DeviceRoom[]
+}
+
+model DeviceRoom {
+  deviceId String
+  device   Device @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  roomId   String
+  room     Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@id([deviceId, roomId])
 }

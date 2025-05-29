@@ -1,13 +1,12 @@
 import prisma from "../../utils/prisma";
-import { DeviceInput } from "./device.schema";
+import { DeviceInput, DeviceRoomInput } from "./device.schema";
 
 export async function createDevice(input: DeviceInput) {
-  const { name, roomId, status } = input;
+  const { name, status } = input;
 
   const device = await prisma.device.create({
     data: {
       name,
-      roomId,
       status,
     },
   });
@@ -18,13 +17,9 @@ export async function createDevice(input: DeviceInput) {
 export async function getDevices() {
   const devices = await prisma.device.findMany({
     include: {
-      room: {
+      rooms: {
         include: {
-          floor: {
-            include: {
-              building: true,
-            },
-          },
+          room: true,
         },
       },
     },
@@ -36,7 +31,18 @@ export async function getDevices() {
 export async function getDevicesByRoomId(roomId: string) {
   const devices = await prisma.device.findMany({
     where: {
-      roomId,
+      rooms: {
+        some: {
+          roomId,
+        },
+      },
+    },
+    include: {
+      rooms: {
+        include: {
+          room: true,
+        },
+      },
     },
   });
 
@@ -64,4 +70,37 @@ export async function deleteDevice(deviceId: string) {
   });
 
   return device;
+}
+
+export async function connectDeviceToRoom(input: DeviceRoomInput) {
+  const { deviceId, roomId } = input;
+
+  const deviceRoom = await prisma.deviceRoom.create({
+    data: {
+      deviceId,
+      roomId,
+    },
+    include: {
+      device: true,
+      room: true,
+    },
+  });
+
+  return deviceRoom;
+}
+
+export async function disconnectDeviceFromRoom(
+  deviceId: string,
+  roomId: string
+) {
+  const deviceRoom = await prisma.deviceRoom.delete({
+    where: {
+      deviceId_roomId: {
+        deviceId,
+        roomId,
+      },
+    },
+  });
+
+  return deviceRoom;
 }

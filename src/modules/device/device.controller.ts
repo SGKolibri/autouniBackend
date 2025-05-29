@@ -1,12 +1,14 @@
 import { FastifyRequest, FastifyReply } from "fastify";
+import { DeviceInput, DeviceRoomInput } from "./device.schema";
 import {
   createDevice,
   getDevices,
   getDevicesByRoomId,
   updateDeviceStatus,
   deleteDevice,
+  connectDeviceToRoom,
+  disconnectDeviceFromRoom,
 } from "./device.services";
-import { DeviceInput } from "./device.schema";
 
 export async function createDeviceHandler(
   request: FastifyRequest<{ Body: DeviceInput }>,
@@ -66,6 +68,11 @@ export async function updateDeviceStatusHandler(
     return reply.code(200).send(device);
   } catch (error) {
     console.error("Error updating device status:", error);
+
+    if ((error as any).code === "P2025") {
+      return reply.code(404).send({ error: "Device not found" });
+    }
+
     return reply.code(500).send({ error: "Internal server error" });
   }
 }
@@ -77,10 +84,57 @@ export async function deleteDeviceHandler(
   const { deviceId } = request.params;
 
   try {
-    const device = await deleteDevice(deviceId);
-    return reply.code(200).send(device);
+    await deleteDevice(deviceId);
+    return reply.code(204).send();
   } catch (error) {
     console.error("Error deleting device:", error);
+
+    if ((error as any).code === "P2025") {
+      return reply.code(404).send({ error: "Device not found" });
+    }
+
+    return reply.code(500).send({ error: "Internal server error" });
+  }
+}
+
+export async function connectDeviceToRoomHandler(
+  request: FastifyRequest<{ Body: DeviceRoomInput }>,
+  reply: FastifyReply
+) {
+  const body = request.body;
+
+  try {
+    const connection = await connectDeviceToRoom(body);
+    return reply.code(201).send(connection);
+  } catch (error) {
+    console.error("Error connecting device to room:", error);
+
+    if ((error as any).code === "P2002") {
+      return reply
+        .code(409)
+        .send({ error: "Device is already connected to this room" });
+    }
+
+    return reply.code(500).send({ error: "Internal server error" });
+  }
+}
+
+export async function disconnectDeviceFromRoomHandler(
+  request: FastifyRequest<{ Params: { deviceId: string; roomId: string } }>,
+  reply: FastifyReply
+) {
+  const { deviceId, roomId } = request.params;
+
+  try {
+    await disconnectDeviceFromRoom(deviceId, roomId);
+    return reply.code(204).send();
+  } catch (error) {
+    console.error("Error disconnecting device from room:", error);
+
+    if ((error as any).code === "P2025") {
+      return reply.code(404).send({ error: "Connection not found" });
+    }
+
     return reply.code(500).send({ error: "Internal server error" });
   }
 }

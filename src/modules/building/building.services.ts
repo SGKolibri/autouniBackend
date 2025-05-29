@@ -31,3 +31,20 @@ export async function addFloorToBuilding(buildingId: string, floorId: string) {
   });
   return building;
 }
+
+// gets a buildings JSON and registers it in the database
+/*
+[
+  { "name": "Bloco A" },
+  { "name": "Bloco B" },
+  { "name": "Bloco C" },
+  { "name": "Bloco D" },
+  { "name": "Bloco E" },
+  { "name": "Bloco F" },
+  { "name": "Bloco G" },
+  { "name": "Bloco H" },
+  { "name": "Bloco I" },
+  { "name": "Bloco J" }
+]
+
+*/
