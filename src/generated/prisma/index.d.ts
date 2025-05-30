@@ -90,6 +90,37 @@ export type Schedule = $Result.DefaultSelection<Prisma.$SchedulePayload>
 export type ScheduleDay = $Result.DefaultSelection<Prisma.$ScheduleDayPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const DEVICETYPE: {
+  LIGHT: 'LIGHT',
+  THERMOSTAT: 'THERMOSTAT',
+  SENSOR: 'SENSOR',
+  SWITCH: 'SWITCH',
+  CAMERA: 'CAMERA',
+  PLUG: 'PLUG',
+  PRINTER: 'PRINTER',
+  FAN: 'FAN',
+  OUTLET: 'OUTLET',
+  PROJECTOR: 'PROJECTOR',
+  SPEAKER: 'SPEAKER',
+  ROUTER: 'ROUTER',
+  WORKSTATION: 'WORKSTATION',
+  COMPUTER: 'COMPUTER',
+  AIR: 'AIR',
+  OTHER: 'OTHER'
+};
+
+export type DEVICETYPE = (typeof DEVICETYPE)[keyof typeof DEVICETYPE]
+
+}
+
+export type DEVICETYPE = $Enums.DEVICETYPE
+
+export const DEVICETYPE: typeof $Enums.DEVICETYPE
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -5549,18 +5580,21 @@ export namespace Prisma {
     id: string | null
     name: string | null
     status: string | null
+    type: $Enums.DEVICETYPE | null
   }
 
   export type DeviceMaxAggregateOutputType = {
     id: string | null
     name: string | null
     status: string | null
+    type: $Enums.DEVICETYPE | null
   }
 
   export type DeviceCountAggregateOutputType = {
     id: number
     name: number
     status: number
+    type: number
     _all: number
   }
 
@@ -5569,18 +5603,21 @@ export namespace Prisma {
     id?: true
     name?: true
     status?: true
+    type?: true
   }
 
   export type DeviceMaxAggregateInputType = {
     id?: true
     name?: true
     status?: true
+    type?: true
   }
 
   export type DeviceCountAggregateInputType = {
     id?: true
     name?: true
     status?: true
+    type?: true
     _all?: true
   }
 
@@ -5660,6 +5697,7 @@ export namespace Prisma {
     id: string
     name: string
     status: string
+    type: $Enums.DEVICETYPE
     _count: DeviceCountAggregateOutputType | null
     _min: DeviceMinAggregateOutputType | null
     _max: DeviceMaxAggregateOutputType | null
@@ -5683,6 +5721,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
+    type?: boolean
     rooms?: boolean | Device$roomsArgs<ExtArgs>
     deviceTriggers?: boolean | Device$deviceTriggersArgs<ExtArgs>
     deviceActions?: boolean | Device$deviceActionsArgs<ExtArgs>
@@ -5693,21 +5732,24 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
+    type?: boolean
   }, ExtArgs["result"]["device"]>
 
   export type DeviceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     status?: boolean
+    type?: boolean
   }, ExtArgs["result"]["device"]>
 
   export type DeviceSelectScalar = {
     id?: boolean
     name?: boolean
     status?: boolean
+    type?: boolean
   }
 
-  export type DeviceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status", ExtArgs["result"]["device"]>
+  export type DeviceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status" | "type", ExtArgs["result"]["device"]>
   export type DeviceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rooms?: boolean | Device$roomsArgs<ExtArgs>
     deviceTriggers?: boolean | Device$deviceTriggersArgs<ExtArgs>
@@ -5728,6 +5770,7 @@ export namespace Prisma {
       id: string
       name: string
       status: string
+      type: $Enums.DEVICETYPE
     }, ExtArgs["result"]["device"]>
     composites: {}
   }
@@ -6157,6 +6200,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Device", 'String'>
     readonly name: FieldRef<"Device", 'String'>
     readonly status: FieldRef<"Device", 'String'>
+    readonly type: FieldRef<"Device", 'DEVICETYPE'>
   }
     
 
@@ -18426,7 +18470,8 @@ export namespace Prisma {
   export const DeviceScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    status: 'status'
+    status: 'status',
+    type: 'type'
   };
 
   export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
@@ -18590,6 +18635,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DEVICETYPE'
+   */
+  export type EnumDEVICETYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DEVICETYPE'>
+    
+
+
+  /**
+   * Reference to a field of type 'DEVICETYPE[]'
+   */
+  export type ListEnumDEVICETYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DEVICETYPE[]'>
     
 
 
@@ -18762,6 +18821,7 @@ export namespace Prisma {
     id?: StringFilter<"Device"> | string
     name?: StringFilter<"Device"> | string
     status?: StringFilter<"Device"> | string
+    type?: EnumDEVICETYPEFilter<"Device"> | $Enums.DEVICETYPE
     rooms?: DeviceRoomListRelationFilter
     deviceTriggers?: TriggerDeviceListRelationFilter
     deviceActions?: ActionDeviceListRelationFilter
@@ -18771,6 +18831,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     rooms?: DeviceRoomOrderByRelationAggregateInput
     deviceTriggers?: TriggerDeviceOrderByRelationAggregateInput
     deviceActions?: ActionDeviceOrderByRelationAggregateInput
@@ -18783,6 +18844,7 @@ export namespace Prisma {
     NOT?: DeviceWhereInput | DeviceWhereInput[]
     name?: StringFilter<"Device"> | string
     status?: StringFilter<"Device"> | string
+    type?: EnumDEVICETYPEFilter<"Device"> | $Enums.DEVICETYPE
     rooms?: DeviceRoomListRelationFilter
     deviceTriggers?: TriggerDeviceListRelationFilter
     deviceActions?: ActionDeviceListRelationFilter
@@ -18792,6 +18854,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     _count?: DeviceCountOrderByAggregateInput
     _max?: DeviceMaxOrderByAggregateInput
     _min?: DeviceMinOrderByAggregateInput
@@ -18804,6 +18867,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Device"> | string
     name?: StringWithAggregatesFilter<"Device"> | string
     status?: StringWithAggregatesFilter<"Device"> | string
+    type?: EnumDEVICETYPEWithAggregatesFilter<"Device"> | $Enums.DEVICETYPE
   }
 
   export type DeviceRoomWhereInput = {
@@ -19498,6 +19562,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     rooms?: DeviceRoomCreateNestedManyWithoutDeviceInput
     deviceTriggers?: TriggerDeviceCreateNestedManyWithoutDeviceInput
     deviceActions?: ActionDeviceCreateNestedManyWithoutDeviceInput
@@ -19507,6 +19572,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     rooms?: DeviceRoomUncheckedCreateNestedManyWithoutDeviceInput
     deviceTriggers?: TriggerDeviceUncheckedCreateNestedManyWithoutDeviceInput
     deviceActions?: ActionDeviceUncheckedCreateNestedManyWithoutDeviceInput
@@ -19516,6 +19582,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     rooms?: DeviceRoomUpdateManyWithoutDeviceNestedInput
     deviceTriggers?: TriggerDeviceUpdateManyWithoutDeviceNestedInput
     deviceActions?: ActionDeviceUpdateManyWithoutDeviceNestedInput
@@ -19525,6 +19592,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     rooms?: DeviceRoomUncheckedUpdateManyWithoutDeviceNestedInput
     deviceTriggers?: TriggerDeviceUncheckedUpdateManyWithoutDeviceNestedInput
     deviceActions?: ActionDeviceUncheckedUpdateManyWithoutDeviceNestedInput
@@ -19534,18 +19602,21 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
   }
 
   export type DeviceUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
   }
 
   export type DeviceUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
   }
 
   export type DeviceRoomCreateInput = {
@@ -20228,6 +20299,13 @@ export namespace Prisma {
     floorId?: SortOrder
   }
 
+  export type EnumDEVICETYPEFilter<$PrismaModel = never> = {
+    equals?: $Enums.DEVICETYPE | EnumDEVICETYPEFieldRefInput<$PrismaModel>
+    in?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    not?: NestedEnumDEVICETYPEFilter<$PrismaModel> | $Enums.DEVICETYPE
+  }
+
   export type TriggerDeviceListRelationFilter = {
     every?: TriggerDeviceWhereInput
     some?: TriggerDeviceWhereInput
@@ -20252,18 +20330,31 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    type?: SortOrder
   }
 
   export type DeviceMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    type?: SortOrder
   }
 
   export type DeviceMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+  }
+
+  export type EnumDEVICETYPEWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DEVICETYPE | EnumDEVICETYPEFieldRefInput<$PrismaModel>
+    in?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    not?: NestedEnumDEVICETYPEWithAggregatesFilter<$PrismaModel> | $Enums.DEVICETYPE
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDEVICETYPEFilter<$PrismaModel>
+    _max?: NestedEnumDEVICETYPEFilter<$PrismaModel>
   }
 
   export type DeviceScalarRelationFilter = {
@@ -20896,6 +20987,10 @@ export namespace Prisma {
     connectOrCreate?: ActionDeviceCreateOrConnectWithoutDeviceInput | ActionDeviceCreateOrConnectWithoutDeviceInput[]
     createMany?: ActionDeviceCreateManyDeviceInputEnvelope
     connect?: ActionDeviceWhereUniqueInput | ActionDeviceWhereUniqueInput[]
+  }
+
+  export type EnumDEVICETYPEFieldUpdateOperationsInput = {
+    set?: $Enums.DEVICETYPE
   }
 
   export type DeviceRoomUpdateManyWithoutDeviceNestedInput = {
@@ -21565,6 +21660,23 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumDEVICETYPEFilter<$PrismaModel = never> = {
+    equals?: $Enums.DEVICETYPE | EnumDEVICETYPEFieldRefInput<$PrismaModel>
+    in?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    not?: NestedEnumDEVICETYPEFilter<$PrismaModel> | $Enums.DEVICETYPE
+  }
+
+  export type NestedEnumDEVICETYPEWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DEVICETYPE | EnumDEVICETYPEFieldRefInput<$PrismaModel>
+    in?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DEVICETYPE[] | ListEnumDEVICETYPEFieldRefInput<$PrismaModel>
+    not?: NestedEnumDEVICETYPEWithAggregatesFilter<$PrismaModel> | $Enums.DEVICETYPE
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDEVICETYPEFilter<$PrismaModel>
+    _max?: NestedEnumDEVICETYPEFilter<$PrismaModel>
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -22015,6 +22127,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     deviceTriggers?: TriggerDeviceCreateNestedManyWithoutDeviceInput
     deviceActions?: ActionDeviceCreateNestedManyWithoutDeviceInput
   }
@@ -22023,6 +22136,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     deviceTriggers?: TriggerDeviceUncheckedCreateNestedManyWithoutDeviceInput
     deviceActions?: ActionDeviceUncheckedCreateNestedManyWithoutDeviceInput
   }
@@ -22064,6 +22178,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     deviceTriggers?: TriggerDeviceUpdateManyWithoutDeviceNestedInput
     deviceActions?: ActionDeviceUpdateManyWithoutDeviceNestedInput
   }
@@ -22072,6 +22187,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     deviceTriggers?: TriggerDeviceUncheckedUpdateManyWithoutDeviceNestedInput
     deviceActions?: ActionDeviceUncheckedUpdateManyWithoutDeviceNestedInput
   }
@@ -22452,6 +22568,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     rooms?: DeviceRoomCreateNestedManyWithoutDeviceInput
     deviceActions?: ActionDeviceCreateNestedManyWithoutDeviceInput
   }
@@ -22460,6 +22577,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     rooms?: DeviceRoomUncheckedCreateNestedManyWithoutDeviceInput
     deviceActions?: ActionDeviceUncheckedCreateNestedManyWithoutDeviceInput
   }
@@ -22505,6 +22623,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     rooms?: DeviceRoomUpdateManyWithoutDeviceNestedInput
     deviceActions?: ActionDeviceUpdateManyWithoutDeviceNestedInput
   }
@@ -22513,6 +22632,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     rooms?: DeviceRoomUncheckedUpdateManyWithoutDeviceNestedInput
     deviceActions?: ActionDeviceUncheckedUpdateManyWithoutDeviceNestedInput
   }
@@ -22732,6 +22852,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     rooms?: DeviceRoomCreateNestedManyWithoutDeviceInput
     deviceTriggers?: TriggerDeviceCreateNestedManyWithoutDeviceInput
   }
@@ -22740,6 +22861,7 @@ export namespace Prisma {
     id?: string
     name: string
     status: string
+    type?: $Enums.DEVICETYPE
     rooms?: DeviceRoomUncheckedCreateNestedManyWithoutDeviceInput
     deviceTriggers?: TriggerDeviceUncheckedCreateNestedManyWithoutDeviceInput
   }
@@ -22783,6 +22905,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     rooms?: DeviceRoomUpdateManyWithoutDeviceNestedInput
     deviceTriggers?: TriggerDeviceUpdateManyWithoutDeviceNestedInput
   }
@@ -22791,6 +22914,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    type?: EnumDEVICETYPEFieldUpdateOperationsInput | $Enums.DEVICETYPE
     rooms?: DeviceRoomUncheckedUpdateManyWithoutDeviceNestedInput
     deviceTriggers?: TriggerDeviceUncheckedUpdateManyWithoutDeviceNestedInput
   }

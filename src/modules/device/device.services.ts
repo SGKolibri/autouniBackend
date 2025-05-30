@@ -1,13 +1,15 @@
+import { DEVICETYPE } from "../../generated/prisma";
 import prisma from "../../utils/prisma";
 import { DeviceInput, DeviceRoomInput } from "./device.schema";
 
 export async function createDevice(input: DeviceInput) {
-  const { name, status } = input;
+  const { name, status, type } = input;
 
   const device = await prisma.device.create({
     data: {
       name,
       status,
+      type,
     },
   });
 
@@ -103,4 +105,66 @@ export async function disconnectDeviceFromRoom(
   });
 
   return deviceRoom;
+}
+
+export async function getDevicesByType(type: DEVICETYPE) {
+  const devices = await prisma.device.findMany({
+    where: {
+      type,
+    },
+    include: {
+      rooms: {
+        include: {
+          room: true,
+        },
+      },
+    },
+  });
+
+  return devices;
+}
+
+export async function setLightBrightness(deviceId: string, brightness: number) {
+  // First check if device is a light
+  const device = await prisma.device.findUnique({
+    where: { id: deviceId },
+  });
+
+  if (!device || device.type !== "LIGHT") {
+    throw new Error("Device is not a light");
+  }
+
+  // Update light status with brightness information
+  // This might involve parsing and updating your status field
+  // or adding dedicated properties fields
+  return prisma.device.update({
+    where: { id: deviceId },
+    data: {
+      status: JSON.stringify({
+        ...JSON.parse(device.status || "{}"),
+        brightness,
+      }),
+    },
+  });
+}
+
+// For thermostats
+export async function setTemperature(deviceId: string, temperature: number) {
+  const device = await prisma.device.findUnique({
+    where: { id: deviceId },
+  });
+
+  if (!device || device.type !== "THERMOSTAT") {
+    throw new Error("Device is not a thermostat");
+  }
+
+  return prisma.device.update({
+    where: { id: deviceId },
+    data: {
+      status: JSON.stringify({
+        ...JSON.parse(device.status || "{}"),
+        temperature,
+      }),
+    },
+  });
 }

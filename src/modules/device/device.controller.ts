@@ -8,7 +8,11 @@ import {
   deleteDevice,
   connectDeviceToRoom,
   disconnectDeviceFromRoom,
+  setTemperature,
+  setLightBrightness,
+  getDevicesByType,
 } from "./device.services";
+import { DEVICETYPE } from "../../generated/prisma";
 
 export async function createDeviceHandler(
   request: FastifyRequest<{ Body: DeviceInput }>,
@@ -133,6 +137,69 @@ export async function disconnectDeviceFromRoomHandler(
 
     if ((error as any).code === "P2025") {
       return reply.code(404).send({ error: "Connection not found" });
+    }
+
+    return reply.code(500).send({ error: "Internal server error" });
+  }
+}
+
+export async function getDevicesByTypeHandler(
+  request: FastifyRequest<{ Params: { type: DEVICETYPE } }>,
+  reply: FastifyReply
+) {
+  const { type } = request.params;
+
+  try {
+    const devices = await getDevicesByType(type);
+    return reply.code(200).send(devices);
+  } catch (error) {
+    console.error("Error fetching devices by type:", error);
+    return reply.code(500).send({ error: "Internal server error" });
+  }
+}
+
+export async function setLightBrightnessHandler(
+  request: FastifyRequest<{
+    Params: { deviceId: string };
+    Body: { brightness: number };
+  }>,
+  reply: FastifyReply
+) {
+  const { deviceId } = request.params;
+  const { brightness } = request.body;
+
+  try {
+    const device = await setLightBrightness(deviceId, brightness);
+    return reply.code(200).send(device);
+  } catch (error) {
+    console.error("Error setting light brightness:", error);
+
+    if ((error as Error).message === "Device is not a light") {
+      return reply.code(400).send({ error: "Device is not a light" });
+    }
+
+    return reply.code(500).send({ error: "Internal server error" });
+  }
+}
+
+export async function setTemperatureHandler(
+  request: FastifyRequest<{
+    Params: { deviceId: string };
+    Body: { temperature: number };
+  }>,
+  reply: FastifyReply
+) {
+  const { deviceId } = request.params;
+  const { temperature } = request.body;
+
+  try {
+    const device = await setTemperature(deviceId, temperature);
+    return reply.code(200).send(device);
+  } catch (error) {
+    console.error("Error setting thermostat temperature:", error);
+
+    if ((error as Error).message === "Device is not a thermostat") {
+      return reply.code(400).send({ error: "Device is not a thermostat" });
     }
 
     return reply.code(500).send({ error: "Internal server error" });

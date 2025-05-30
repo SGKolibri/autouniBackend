@@ -13,7 +13,7 @@ const register = async () => {
     await createBuildings(buildingsJson as BuildingInput[]);
     await createFloors();
     await createRooms();
-    await createDevices(devicesJson);
+    await createDevices(devicesJson as DeviceInput[]);
     await addDevicesToRooms();
     await createAutomations();
     console.log("Seeding completed successfully.");

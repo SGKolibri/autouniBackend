@@ -35,9 +35,29 @@ model Device {
   id          String        @id @default(cuid())
   name        String
   status      String
+  type        DEVICETYPE    @default(OTHER)
   rooms       DeviceRoom[]
   deviceTriggers TriggerDevice[]
   deviceActions ActionDevice[]
+}
+
+enum DEVICETYPE {
+  LIGHT
+  THERMOSTAT
+  SENSOR
+  SWITCH
+  CAMERA
+  PLUG
+  PRINTER
+  FAN
+  OUTLET
+  PROJECTOR
+  SPEAKER
+  ROUTER
+  WORKSTATION
+  COMPUTER
+  AIR
+  OTHER
 }
 
 // DeviceRoom is a join table to associate devices with rooms

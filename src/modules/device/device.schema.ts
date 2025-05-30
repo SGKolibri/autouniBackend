@@ -1,9 +1,29 @@
 import { z } from "zod";
 import { buildJsonSchemas } from "fastify-zod";
 
+export const DevicesEnum = z.enum([
+  "LIGHT",
+  "THERMOSTAT",
+  "SENSOR",
+  "SWITCH",
+  "CAMERA",
+  "PLUG",
+  "PRINTER",
+  "FAN",
+  "OUTLET",
+  "PROJECTOR",
+  "SPEAKER",
+  "ROUTER",
+  "WORKSTATION",
+  "COMPUTER",
+  "AIR",
+  "OTHER",
+]);
+
 export const deviceSchema = z.object({
   name: z.string(),
   status: z.string(),
+  type: DevicesEnum.default("OTHER"),
 });
 
 // For connecting a device to a room

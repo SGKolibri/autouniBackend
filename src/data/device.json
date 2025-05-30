@@ -1,42 +1,52 @@
 [
   {
     "name": "Projetor",
-    "status": "available"
+    "status": "available",
+    "type": "PROJECTOR"
   },
   {
-    "name": "Quadro interativo",
-    "status": "in_use"
+    "name": "Servidor",
+    "status": "in_use",
+    "type": "ROUTER"
   },
   {
     "name": "Ar-condicionado",
-    "status": "maintenance"
+    "status": "maintenance",
+    "type": "AIR"
   },
   {
     "name": "Câmera de segurança",
-    "status": "active"
+    "status": "active",
+    "type": "CAMERA"
   },
   {
     "name": "Impressora",
-    "status": "available"
+    "status": "available",
+    "type": "PRINTER"
   },
   {
     "name": "Sensor de movimento",
-    "status": "active"
+    "status": "active",
+    "type": "SENSOR"
   },
   {
     "name": "Lâmpada smart",
-    "status": "active"
+    "status": "active",
+    "type": "LIGHT"
   },
   {
     "name": "Sistema de som",
-    "status": "available"
+    "status": "available",
+    "type": "SPEAKER"
   },
   {
     "name": "Workstation",
-    "status": "in_use"
+    "status": "in_use",
+    "type": "WORKSTATION"
   },
   {
     "name": "Servidor de arquivos",
-    "status": "active"
+    "status": "active",
+    "type": "COMPUTER"
   }
 ]

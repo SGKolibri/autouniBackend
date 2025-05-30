@@ -140,7 +140,8 @@ exports.Prisma.RoomScalarFieldEnum = {
 exports.Prisma.DeviceScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  status: 'status'
+  status: 'status',
+  type: 'type'
 };
 
 exports.Prisma.DeviceRoomScalarFieldEnum = {
@@ -228,7 +229,24 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.DEVICETYPE = exports.$Enums.DEVICETYPE = {
+  LIGHT: 'LIGHT',
+  THERMOSTAT: 'THERMOSTAT',
+  SENSOR: 'SENSOR',
+  SWITCH: 'SWITCH',
+  CAMERA: 'CAMERA',
+  PLUG: 'PLUG',
+  PRINTER: 'PRINTER',
+  FAN: 'FAN',
+  OUTLET: 'OUTLET',
+  PROJECTOR: 'PROJECTOR',
+  SPEAKER: 'SPEAKER',
+  ROUTER: 'ROUTER',
+  WORKSTATION: 'WORKSTATION',
+  COMPUTER: 'COMPUTER',
+  AIR: 'AIR',
+  OTHER: 'OTHER'
+};
 
 exports.Prisma.ModelName = {
   Building: 'Building',
